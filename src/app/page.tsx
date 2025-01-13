@@ -1,101 +1,21 @@
-import Image from "next/image";
-
+import { Chatbot } from "@/components/chatbot";
+import { url } from "inspector";
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+    <div className="flex items-center justify-center overflow-hidden">
+    <div className="md:w-1/2 w-full p-5 h-full flex flex-col gap-5  items-start justify-start ">
+     
+     <Chatbot />
+     
+   </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+   <div className="md:w-1/2 hidden md:block h-full animate-pulse">
+          <svg width="807" height="567" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 807 567"><path stroke="url(#a)" strokeWidth="2" d="M780 1H13C6.37258 1 1 6.37257 1 13v503"></path><path stroke="url(#b)" strokeWidth="2" d="M2.01562 59.2705H806.031"></path><path stroke="url(#c)" strokeWidth="2" d="M1.02344 117.771H805.039"></path><path stroke="url(#d)" strokeWidth="2" d="M71.0234 299.771H666.023"></path><circle cx="28.5234" cy="31.2705" r="4.5" fill="#2645D3"></circle><circle cx="43.5234" cy="31.2705" r="4.5" fill="#E4C0F6"></circle><circle cx="58.5234" cy="31.2705" r="4.5" fill="#06A21F"></circle><path fill="#2C2A65" d="M42 86c-1.5 0-3 1.5-3 4.5v6c0 3-1.5 4.5-4.5 4.5s-4.5-1.5-4.5-4.5v-6c0-3-1.5-4.5-3-4.5s-3 1.5-3 4.5v6c0 5 4 9 9 9s9-4 9-9v-6c0-3-1.5-4.5-3-4.5Z" transform="translate(0, -2)"></path>
+<g stroke="#201F43" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" clipPath="url(#e)"><path d="m93.0234 85.7705 7.9996-4 8 4m-15.9996 0 7.9996 4 8-4m-15.9996 4 7.9996 4 8-4m-15.9996 4 7.9996 4 8-4"></path></g><g stroke="#201F43" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" clipPath="url(#f)"><path d="m144.023 85.7705-2-4h-5l-2 4 2 4h5l2-4Z"></path><path d="m151.023 89.7705-2-4h-5l-2 4 2 4h5l2-4Z"></path><path d="m144.023 93.7705-2-4h-5l-2 4 2 4h5l2-4Z"></path></g><path stroke="#201F43" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M183.023 96.7705s-7-1-7-14l7-2 7 2c0 13-7 14-7 14Z"></path><rect width="77" height="20" x="587.023" y="78.7705" stroke="url(#g)" strokeWidth="2" rx="7"></rect><rect width="77" height="20" x="490.023" y="78.7705" stroke="#201F43" strokeWidth="2" rx="7"></rect><rect width="36" height="3" x="516.023" y="87.7705" fill="#201F43" rx="1.5"></rect><rect width="36" height="3" x="609.023" y="87.7705" fill="url(#h)" rx="1.5"></rect><circle cx="505.023" cy="88.7705" r="5" fill="#201F43"></circle><circle cx="121.023" cy="198.771" r="49" stroke="#201F43" strokeWidth="2"></circle><circle cx="350.523" cy="201.271" r="41.65" stroke="#201F43" strokeWidth="1.7"></circle><rect width="103" height="103" x="299.023" y="149.771" stroke="#201F43" strokeWidth="2" rx="51.5"></rect><circle cx="580.023" cy="198.771" r="49" stroke="#201F43" strokeWidth="2"></circle><rect width="36" height="3" x="103.023" y="184.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="111.023" y="202.771" fill="#201F43" rx="1.5"></rect><rect width="36" height="3" x="332.023" y="189.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="340.023" y="207.771" fill="#201F43" rx="1.5"></rect><rect width="36" height="3" x="562.023" y="184.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="570.023" y="202.771" fill="#201F43" rx="1.5"></rect><path stroke="#201F43" strokeLinecap="round" strokeWidth="2" d="M169.522 206.771s17.499 21.999 35 18.999c17.5-3 25.5-23 46.5-27.5s47.5 5.5 47.5 5.5m103.002-13.499s19-14.345 38-5.5c19 8.844 28 38.63 54 37.5 26-1.131 38-30 38-30"></path><rect width="19" height="3" x="71.0234" y="290.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="71.0234" y="305.771" fill="#201F43" rx="1.5"></rect><path stroke="url(#i)" strokeWidth="2" d="M71.0234 390.771H346.523"></path><rect width="38" height="3" x="101.023" y="366.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="92.0234" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="174.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="234.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="294.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="142.023" y="366.771" fill="#201F43" rx="1.5"></rect><path stroke="url(#j)" strokeWidth="2" d="M347.023 566.771v-208c0-11.046-8.954-20-20-20H91.0234c-11.0457 0-20 8.954-20 20v208"></path><rect width="19" height="3" x="123.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="124.022" y="451.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="193.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="253.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="313.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="20.3462" height="21.2308" x="94.3495" y="437.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect><g opacity=".6"><rect width="19" height="3" x="123.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="124.022" y="495.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="193.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="253.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="313.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="20.3462" height="21.2308" x="94.3495" y="481.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect></g><g opacity=".3"><rect width="19" height="3" x="123.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="124.022" y="539.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="193.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="253.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="313.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="20.3462" height="21.2308" x="94.3495" y="525.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect></g><path stroke="url(#k)" strokeWidth="2" d="M387.023 390.771h275.5"></path><rect width="38" height="3" x="417.023" y="366.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="408.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="490.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="550.023" y="408.771" fill="#201F43" rx="1.5"></rect><rect width="38" height="3" x="610.023" y="408.771" fill="#201F43" opacity=".2" rx="1.5"></rect><rect width="19" height="3" x="458.023" y="366.771" fill="#201F43" rx="1.5"></rect><path stroke="url(#l)" strokeWidth="2" d="M663.023 566.771v-208c0-11.046-8.954-20-20-20h-236c-11.045 0-20 8.954-20 20v208"></path><rect width="19" height="3" x="439.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="440.022" y="451.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="509.022" y="441.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="569.022" y="441.771" fill="#201F43" rx="1.5"></rect><path fill="#201F43" d="M629.022 443.271c0-.829.672-1.5 1.5-1.5h16c.829 0 1.5.671 1.5 1.5 0 .828-.671 1.5-1.5 1.5h-16c-.828 0-1.5-.672-1.5-1.5Z" opacity=".2"></path><rect width="20.3462" height="21.2308" x="410.349" y="437.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect><g opacity=".6"><rect width="19" height="3" x="439.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="440.022" y="495.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="509.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="569.022" y="485.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="629.022" y="485.771" fill="#201F43" opacity=".2" rx="1.5"></rect><rect width="20.3462" height="21.2308" x="410.349" y="481.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect></g><g opacity=".3"><rect width="19" height="3" x="439.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="11" height="3" x="440.022" y="539.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="509.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="569.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="19" height="3" x="629.022" y="529.771" fill="#201F43" rx="1.5"></rect><rect width="20.3462" height="21.2308" x="410.349" y="525.655" stroke="#201F43" strokeWidth="1.76923" rx="7.96154"></rect></g><defs><linearGradient id="a" x1="51.5" x2="329" y1="-14.5" y2="453.5" gradientUnits="userSpaceOnUse"><stop stopColor="#201F43"></stop><stop offset=".80426" stopColor="#201F43" stopOpacity="0"></stop></linearGradient><linearGradient id="b" x1="806.023" x2="2.02348" y1="60.7741" y2="60.7714" gradientUnits="userSpaceOnUse"><stop offset=".18228" stopColor="#201F43" stopOpacity="0"></stop><stop offset=".34896" stopColor="#201F43"></stop></linearGradient><linearGradient id="c" x1="805.031" x2="1.0313" y1="119.274" y2="119.271" gradientUnits="userSpaceOnUse"><stop offset=".18228" stopColor="#282647" stopOpacity="0"></stop><stop offset=".35938" stopColor="#201F43"></stop></linearGradient><linearGradient id="d" x1="874.924" x2="70.9238" y1="123967000000000000" y2="123967000000000000" gradientUnits="userSpaceOnUse"><stop offset=".26455" stopColor="#201F43" stopOpacity="0"></stop><stop offset=".4464" stopColor="#201F43"></stop></linearGradient><linearGradient id="g" x1="586.023" x2="672.023" y1="99.7705" y2="99.7705" gradientUnits="userSpaceOnUse"><stop stopColor="#201F43"></stop><stop offset="1" stopColor="#201F43" stopOpacity="0"></stop></linearGradient><linearGradient id="h" x1="604.523" x2="646.023" y1="92.7705" y2="92.2705" gradientUnits="userSpaceOnUse"><stop stopColor="#201F43"></stop><stop offset="1" stopColor="#201F43" stopOpacity="0"></stop></linearGradient><linearGradient id="i" x1="443.192" x2="70.9195" y1="123967000000000000" y2="123967000000000000" gradientUnits="userSpaceOnUse"><stop offset=".18228" stopColor="#201F43" stopOpacity="0"></stop><stop offset=".35938" stopColor="#201F43"></stop></linearGradient><linearGradient id="j" x1="209.023" x2="209.023" y1="313.771" y2="566.77" gradientUnits="userSpaceOnUse"><stop stopColor="#201F43"></stop><stop offset=".79695" stopColor="#201F43" stopOpacity="0"></stop></linearGradient><linearGradient id="k" x1="759.192" x2="386.92" y1="123967000000000000" y2="123967000000000000" gradientUnits="userSpaceOnUse"><stop offset=".24479" stopColor="#282647" stopOpacity="0"></stop><stop offset=".75521" stopColor="#201F43"></stop></linearGradient><linearGradient id="l" x1="416.523" x2="597.523" y1="350.771" y2="519.771" gradientUnits="userSpaceOnUse"><stop stopColor="#201F43"></stop><stop offset=".79695" stopColor="#201F43" stopOpacity="0"></stop></linearGradient><clipPath id="e"><path fill="#fff" d="M92.0234 80.7705h18v18h-18z"></path></clipPath><clipPath id="f"><path fill="#fff" d="M134.023 80.7705h18v18h-18z"></path></clipPath></defs></svg>
+
     </div>
+    </div>
+    </>
   );
 }
