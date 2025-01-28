@@ -4,7 +4,6 @@ import ChatInput from "./ChatInput";
 import ChatMessage from "./ChatMessage";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import Modules from "@/components/chatbot/modules";
 import Image from "next/image";
 
 interface MessageType {
@@ -16,17 +15,16 @@ const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<boolean>(true);
-  const [modulesData, setModulesData] = useState<any>(null);
 
   const greetings = [
     "Welcome to our SQL query generator! Ready to turn your text into SQL?",
     "Hello! Let's transform your query into a perfect SQL statement. What would you like to generate?",
     "Hi there! I can help you craft SQL queries from your text. Just let me know your request.",
     "Greetings! Need help converting your query into a structured SQL command?",
-    "Welcome! Feel free to ask for any SQL query generation based on your text input."
-];
+    "Welcome! Feel free to ask for any SQL query generation based on your text input.",
+  ];
 
-
+  // Show a random greeting message when the component mounts
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -39,26 +37,81 @@ const Chatbot: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSend = (text: string) => {
-    const newMessage: MessageType = { text, sender: "user" };
-    setMessages((prev) => [...prev, newMessage]);
+  const handleSend = async (text: string) => {
+    const userMessage: MessageType = { text, sender: "user" };
+    setMessages((prev) => [...prev, userMessage]);
     setLoading(true);
 
-    const timer = setTimeout(() => {
-      const botMessage: MessageType = {
-        text: "This is a static response, backend functionality has not been added yet.",
+    try {
+      const response = await fetch(`http://localhost:5000/query`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: text }),
+      });
+
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      // Append explanation message
+      if (data.explanation) {
+        const explanationMessage: MessageType = {
+          text: `Explanation:\n${data.explanation}`,
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, explanationMessage]);
+      }
+
+      // Append raw query message
+      if (data.raw_query) {
+        const rawQueryMessage: MessageType = {
+          text: `Raw Query:  \n${data.raw_query}`,
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, rawQueryMessage]);
+      }
+
+      // Append results message (if available)
+      if (Array.isArray(data.results) && data.results.length > 0) {
+        const formattedResults = data.results
+          .map(
+            (item, index) =>
+              `${index + 1}. ${Object.keys(item)[0]}: ${Object.values(item)[0]}`
+          )
+          .join("\n");
+
+        const resultsMessage: MessageType = {
+          text: `Results: \n${formattedResults}`,
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, resultsMessage]);
+      }
+
+      // Append suggested queries message
+      if (Array.isArray(data.suggested_queries) && data.suggested_queries.length > 0) {
+        const suggestionsMessage: MessageType = {
+          text: `**Suggested Queries:**\n${data.suggested_queries.join("\n")}`,
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, suggestionsMessage]);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      const errorMessage: MessageType = {
+        text: "There was an error processing your request.",
         sender: "bot",
       };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    }
   };
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const [onBottom, setOnBottom] = useState(true);
 
+  // Scroll to the bottom when messages update
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
@@ -69,6 +122,18 @@ const Chatbot: React.FC = () => {
     }
   }, [messages]);
 
+  // Handle manual scroll to bottom
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+      setOnBottom(true);
+    }
+  };
+
+  // Handle scrolling behavior
   useEffect(() => {
     const handleScroll = () => {
       if (chatContainerRef.current) {
@@ -91,25 +156,15 @@ const Chatbot: React.FC = () => {
     };
   }, []);
 
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-      setOnBottom(true);
-    }
-  };
-
-  function toggleExpand() {
+  const toggleExpand = () => {
     setExpanded(!expanded);
     setTimeout(scrollToBottom, 1000);
-  }
+  };
 
   return (
     <div className="flex w-full xlg:flex-row flex-col items-center xlg:items-start sm:p-5 gap-10 lg:gap-2 xl:gap-10">
-      <div className="flex bg-[rgb(30,30,30)] rounded-3xl px-4 flex-col items-center w-full md:w-[80%] xlg:w-[40%] min-w-[330px] overflow-x-clip relative pb-16 ">
-        <div className="relative sm:px-5 w-full ">
+      <div className="flex bg-[rgb(30,30,30)] rounded-3xl px-4 flex-col items-center w-full md:w-[80%] xlg:w-[40%] min-w-[330px] overflow-x-clip relative pb-16">
+        <div className="relative sm:px-5 w-full">
           <div
             ref={chatContainerRef}
             className={`text-black w-full ${
@@ -121,9 +176,7 @@ const Chatbot: React.FC = () => {
             ))}
             {loading && (
               <span className="flex flex-row items-center gap-5">
-                <div
-                  className="min-w-[40px] flex items-center justify-center max-w-[40px] max-h-[40px] min-h-[40px] bg-[rgb(50,50,50)] rounded-[50%]"
-                >
+                <div className="min-w-[40px] flex items-center justify-center max-w-[40px] max-h-[40px] min-h-[40px] bg-[rgb(50,50,50)] rounded-[50%]">
                   <Image
                     src="/openai.png"
                     alt="AI"
@@ -140,7 +193,6 @@ const Chatbot: React.FC = () => {
               </span>
             )}
           </div>
-
           {!onBottom && (
             <button
               onClick={scrollToBottom}
@@ -158,7 +210,6 @@ const Chatbot: React.FC = () => {
           {expanded ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
         </button>
       </div>
-      {/* <Modules modules={modulesData} /> */}
     </div>
   );
 };
