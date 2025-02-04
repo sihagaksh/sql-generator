@@ -7,8 +7,12 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Image from "next/image";
 
 interface MessageType {
-  text: string;
+  text?: string;
   sender: "bot" | "user";
+  explanation?: string;
+  raw_query?: string;
+  results?: Array<Record<string, any>>;
+  suggested_queries?: string[];
 }
 
 const Chatbot: React.FC = () => {
@@ -31,8 +35,7 @@ const Chatbot: React.FC = () => {
       setLoading(false);
       const randomGreeting =
         greetings[Math.floor(Math.random() * greetings.length)];
-      const botMessage: MessageType = { text: randomGreeting, sender: "bot" };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages([{ text: randomGreeting, sender: "bot" }]);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -43,66 +46,74 @@ const Chatbot: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/query`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: text }),
-      });
+      const response = await fetch(
+        `https://web-production-44b1.up.railway.app/query`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query: text }),
+        }
+      );
 
       const data = await response.json();
       console.log("Response data:", data);
 
-      // Append explanation message
+      if (!data || Object.keys(data).length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          { text: "Sorry, I didn't get a valid response.", sender: "bot" },
+        ]);
+        return;
+      }
+
+      // Prepare all messages in a batch
+      const newMessages: MessageType[] = [];
+
       if (data.explanation) {
-        const explanationMessage: MessageType = {
+        newMessages.push({
           text: `Explanation:\n${data.explanation}`,
           sender: "bot",
-        };
-        setMessages((prev) => [...prev, explanationMessage]);
+        });
       }
 
-      // Append raw query message
       if (data.raw_query) {
-        const rawQueryMessage: MessageType = {
-          text: `Raw Query:  \n${data.raw_query}`,
+        newMessages.push({
+          text: `Raw Query:\n${data.raw_query}`,
           sender: "bot",
-        };
-        setMessages((prev) => [...prev, rawQueryMessage]);
+        });
       }
 
-      // Append results message (if available)
       if (Array.isArray(data.results) && data.results.length > 0) {
         const formattedResults = data.results
           .map(
-            (item, index) =>
+            (item: Record<string, any>, index: number) =>
               `${index + 1}. ${Object.keys(item)[0]}: ${Object.values(item)[0]}`
           )
           .join("\n");
 
-        const resultsMessage: MessageType = {
-          text: `Results: \n${formattedResults}`,
-          sender: "bot",
-        };
-        setMessages((prev) => [...prev, resultsMessage]);
+        newMessages.push({ text: `Results:\n${formattedResults}`, sender: "bot" });
       }
 
-      // Append suggested queries message
-      if (Array.isArray(data.suggested_queries) && data.suggested_queries.length > 0) {
-        const suggestionsMessage: MessageType = {
+      if (
+        Array.isArray(data.suggested_queries) &&
+        data.suggested_queries.length > 0
+      ) {
+        newMessages.push({
           text: `**Suggested Queries:**\n${data.suggested_queries.join("\n")}`,
           sender: "bot",
-        };
-        setMessages((prev) => [...prev, suggestionsMessage]);
+        });
       }
+
+      // Update state once with all new messages
+      setMessages((prev) => [...prev, ...newMessages]);
     } catch (error) {
       console.error("Error:", error);
-      const errorMessage: MessageType = {
-        text: "There was an error processing your request.",
-        sender: "bot",
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        { text: "There was an error processing your request.", sender: "bot" },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -111,7 +122,7 @@ const Chatbot: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const [onBottom, setOnBottom] = useState(true);
 
-  // Scroll to the bottom when messages update
+  // Scroll to bottom when messages update
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
@@ -144,14 +155,13 @@ const Chatbot: React.FC = () => {
       }
     };
 
-    const chatContainer = chatContainerRef.current;
-    if (chatContainer) {
-      chatContainer.addEventListener("scroll", handleScroll);
+    if (chatContainerRef.current) {
+      chatContainerRef.current.addEventListener("scroll", handleScroll);
     }
 
     return () => {
-      if (chatContainer) {
-        chatContainer.removeEventListener("scroll", handleScroll);
+      if (chatContainerRef.current) {
+        chatContainerRef.current.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);
@@ -172,7 +182,7 @@ const Chatbot: React.FC = () => {
             } flex flex-col transition-all duration-300 gap-2 py-8 px-3 overflow-y-auto chatbox`}
           >
             {messages.map((msg, index) => (
-              <ChatMessage key={index} index={index} message={msg} />
+              <ChatMessage key={`${msg.sender}-${index}`} message={msg} index={index} />
             ))}
             {loading && (
               <span className="flex flex-row items-center gap-5">
@@ -203,10 +213,7 @@ const Chatbot: React.FC = () => {
           )}
         </div>
         <ChatInput onSend={handleSend} />
-        <button
-          onClick={toggleExpand}
-          className="absolute bottom-4 text-[rgb(100,100,100)]"
-        >
+        <button onClick={toggleExpand} className="absolute bottom-4 text-[rgb(100,100,100)]">
           {expanded ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
         </button>
       </div>
